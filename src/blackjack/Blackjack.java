@@ -80,23 +80,25 @@ public class Blackjack {
         boolean keresFut = true;
         String valasz = "";
         
-        while(keresFut == true) {
-            System.out.print("Kérsz lapot? (I/N): ");
-            valasz = sc.nextLine();
-            
-            if(valasz.equals("I") || valasz.equals("N")) {
-                keresFut = false;
-            } else {
+        if(pontSzamitas(jatekos) <= 21) {
+            while(keresFut == true) {
                 System.out.print("Kérsz lapot? (I/N): ");
                 valasz = sc.nextLine();
+
+                if(valasz.equals("I") || valasz.equals("N")) {
+                    keresFut = false;
+                } else {
+                    System.out.print("Kérsz lapot? (I/N): ");
+                    valasz = sc.nextLine();
+                }
             }
-        }
-        
-        if(valasz.equals("I")) { // kér lapot
-            osztasEgyLapJatekosnak();
-           
-            if(pontSzamitas(jatekos) < 19) {
-                lapKeres();
+
+            if(valasz.equals("I")) { // kér lapot
+                osztasEgyLapJatekosnak();
+
+                if(pontSzamitas(jatekos) < 19) {
+                    lapKeres();
+                }
             }
         }
     }

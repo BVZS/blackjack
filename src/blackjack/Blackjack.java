@@ -20,50 +20,28 @@ public class Blackjack {
     private static void blackjackJatek() {
         kiir("A blackjack elkezdődött." + SEP);
         
-        osztasJatekosnak();
+        jatekos[0] = veletlenszeruLap(); 
+        jatekos[1] = veletlenszeruLap(); 
+        
+        lapOsztas("Játékos", jatekos);
         lapKeres();
         
-        oasztasOsztonak();
+        lapOsztas("Osztó", oszto);
         osztoKerVagyNem();
         
         eredmenyHirdetes();
     }
-   
-    private static void osztasJatekosnak() {
-        jatekos[0] = veletlenszeruLap(); 
-        jatekos[1] = veletlenszeruLap(); 
-        
-        while (pontSzamitas(jatekos) < 15) {
-            for (int i = 0; i < jatekos.length; i++) {
-                if(jatekos[i] == 0) {
-                    jatekos[i] = veletlenszeruLap();
+    
+    private static void lapOsztas(String kinek, int[] tomb) {
+        while (pontSzamitas(tomb) <= 15) {
+            for (int i = 0; i < tomb.length; i++) {
+                if(tomb[i] == 0) {
+                    tomb[i] = veletlenszeruLap();
                     break;
                 }
             }
         }
-        jatekosLapokMutatasa();
-    }
-    
-    private static void oasztasOsztonak() {
-        while (pontSzamitas(oszto) <= 15) {
-            for (int i = 0; i < oszto.length; i++) {
-                if(oszto[i] == 0) {
-                    oszto[i] = veletlenszeruLap();
-                    break;
-                }
-            }
-        }
-        osztoLapokMutatasa();
-    }
-    
-    private static void osztasEgyLapJatekosnak() {
-        for (int i = 0; i < jatekos.length; i++) {
-            if(jatekos[i] == 0) {
-                jatekos[i] = veletlenszeruLap();
-                break;
-            }
-        }
-        jatekosLapokMutatasa();
+        lapokMutatasa(kinek, tomb);
     }
     
     private static void osztasEgyLapOsztonak() {
@@ -73,7 +51,7 @@ public class Blackjack {
                 break;
             }
         }
-        osztoLapokMutatasa();
+        lapokMutatasa("Osztó", oszto);
     }
     
     private static void lapKeres() {
@@ -94,8 +72,7 @@ public class Blackjack {
             }
 
             if(valasz.equals("I")) { // kér lapot
-                osztasEgyLapJatekosnak();
-
+                lapOsztas("Játékos", jatekos);
                 if(pontSzamitas(jatekos) < 19) {
                     lapKeres();
                 }
@@ -141,7 +118,15 @@ public class Blackjack {
    
     
     
-    
+    public static void lapokMutatasa(String kinek, int[] tomb) {
+        kiir(kinek + ": \u001B[32m");
+        for (int i = 0; i < tomb.length; i++) {
+            if(tomb[i] != 0) {
+                kiir(tomb[i] + " ");
+            }
+        }
+        kiir("(" + pontSzamitas(tomb) + ")\u001B[0m" + SEP);
+    }
     
     public static void jatekosLapokMutatasa() {
         kiir("Játékos: \u001B[32m");
@@ -151,16 +136,6 @@ public class Blackjack {
             }
         }
         kiir("(" + pontSzamitas(jatekos) + ")\u001B[0m" + SEP);
-    }
-    
-    public static void osztoLapokMutatasa() {
-        kiir("Osztó: \u001B[33m");
-        for (int i = 0; i < oszto.length; i++) {
-            if(oszto[i] != 0) {
-                kiir(oszto[i] + " ");
-            }
-        }
-        kiir("(" + pontSzamitas(oszto) + ")\u001B[0m" + SEP);
     }
     
     public static int veletlenszeruLap() {

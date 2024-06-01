@@ -21,6 +21,8 @@ public class Blackjack {
         kiir("A blackjack elkezdődött." + SEP);
         osztasJatekosnak();
         lapKeres();
+        
+        //osztasOsztonak();
     }
    
     private static void osztasJatekosnak() {
@@ -33,14 +35,30 @@ public class Blackjack {
                 }
             }
         }
-        
-        kiir("Játékos: ");
-        for (int i = 0; i < jatekos.length; i++) {
-            if(jatekos[i] != 0) {
-                kiir(jatekos[i] + " ");
+        jatekosLapokMutatasa();
+    }
+    
+    /*private static void oasztasOsztonak() {
+        kiir("... Lapok osztása az osztónak ..." + SEP);
+        while (pontSzamitas(jatekos) < 15) {
+            for (int i = 0; i < jatekos.length; i++) {
+                if(jatekos[i] == 0) {
+                    jatekos[i] = veletlenszeruLap();
+                    break;
+                }
             }
         }
-        kiir("(" + pontSzamitas(jatekos) + ")" + SEP);
+        jatekosLapokMutatasa();
+    }*/
+    
+    private static void osztasEgyLapJatekosnak() {
+        for (int i = 0; i < jatekos.length; i++) {
+            if(jatekos[i] == 0) {
+                jatekos[i] = veletlenszeruLap();
+                break;
+            }
+        }
+        jatekosLapokMutatasa();
     }
     
     private static void lapKeres() {
@@ -50,6 +68,7 @@ public class Blackjack {
         while(keresFut == true) {
             System.out.print("Kérsz lapot? (I/N): ");
             valasz = sc.nextLine();
+            
             if(valasz.equals("I") || valasz.equals("N")) {
                 keresFut = false;
             } else {
@@ -57,8 +76,14 @@ public class Blackjack {
                 valasz = sc.nextLine();
             }
         }
-        kiir(valasz);
         
+        if(valasz.equals("I")) { // kér lapot
+            osztasEgyLapJatekosnak();
+           
+            if(pontSzamitas(jatekos) < 19) {
+                lapKeres();
+            }
+        }
     }
     
     
@@ -66,6 +91,16 @@ public class Blackjack {
     
     
     
+    
+    public static void jatekosLapokMutatasa() {
+        kiir("Játékos: \u001B[32m");
+        for (int i = 0; i < jatekos.length; i++) {
+            if(jatekos[i] != 0) {
+                kiir(jatekos[i] + " ");
+            }
+        }
+        kiir("(" + pontSzamitas(jatekos) + ")\u001B[0m" + SEP);
+    }
     
     public static int veletlenszeruLap() {
         int min = 2;

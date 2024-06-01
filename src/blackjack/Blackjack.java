@@ -102,8 +102,10 @@ public class Blackjack {
     }
     
     private static void osztoKerVagyNem() {
-        if (rnd.nextBoolean()) { // true, tehát kér
-            osztasEgyLapOsztonak();
+        if(pontSzamitas(oszto) < 17) {
+            if(rnd.nextBoolean()) { // true, tehát kér
+                osztasEgyLapOsztonak();
+            }
         }
     }
     

@@ -30,8 +30,10 @@ public class Blackjack {
     }
    
     private static void osztasJatekosnak() {
-        //kiir("... Lapok osztása a játékosnak ..." + SEP);
-        while (pontSzamitas(jatekos) <= 15) {
+        jatekos[0] = veletlenszeruLap(); 
+        jatekos[1] = veletlenszeruLap(); 
+        
+        while (pontSzamitas(jatekos) < 15) {
             for (int i = 0; i < jatekos.length; i++) {
                 if(jatekos[i] == 0) {
                     jatekos[i] = veletlenszeruLap();
@@ -43,7 +45,6 @@ public class Blackjack {
     }
     
     private static void oasztasOsztonak() {
-        //kiir("... Lapok osztása az osztónak ..." + SEP);
         while (pontSzamitas(oszto) <= 15) {
             for (int i = 0; i < oszto.length; i++) {
                 if(oszto[i] == 0) {
@@ -72,7 +73,7 @@ public class Blackjack {
                 break;
             }
         }
-        jatekosLapokMutatasa();
+        osztoLapokMutatasa();
     }
     
     private static void lapKeres() {

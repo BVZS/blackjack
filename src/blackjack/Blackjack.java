@@ -111,7 +111,26 @@ public class Blackjack {
     
     private static void eredmenyHirdetes() {
         if(pontSzamitas(jatekos) > 21) {
-            kiir("Bust-olt a játékos. A ház nyert.");
+            kiir("Bust-olt a játékos. A ház nyert." + SEP);
+            System.exit(0);
+        }
+        
+        if(pontSzamitas(jatekos) == pontSzamitas(oszto)) {
+            kiir("Push. Döntetlen." + SEP); 
+        }
+        
+        if((pontSzamitas(jatekos) == 21) && (pontSzamitas(oszto) < pontSzamitas(jatekos))) {
+            kiir("Blackjack! A játékos nyert." + SEP);
+        }
+        
+        if(pontSzamitas(jatekos) > pontSzamitas(oszto)) {
+            kiir("A játékos nyert." + SEP);
+        } else {
+            if(pontSzamitas(oszto) < 22) {
+                kiir("Az osztó nyert." + SEP);
+            } else {
+                kiir("A játékos nyert." + SEP);
+            }
         }
     }
    

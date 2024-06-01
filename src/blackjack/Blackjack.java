@@ -19,15 +19,19 @@ public class Blackjack {
 
     private static void blackjackJatek() {
         kiir("A blackjack elkezdődött." + SEP);
+        
         osztasJatekosnak();
         lapKeres();
         
-        //osztasOsztonak();
+        oasztasOsztonak();
+        osztoKerVagyNem();
+        
+        eredmenyHirdetes();
     }
    
     private static void osztasJatekosnak() {
-        kiir("... Lapok osztása a játékosnak ..." + SEP);
-        while (pontSzamitas(jatekos) < 15) {
+        //kiir("... Lapok osztása a játékosnak ..." + SEP);
+        while (pontSzamitas(jatekos) <= 15) {
             for (int i = 0; i < jatekos.length; i++) {
                 if(jatekos[i] == 0) {
                     jatekos[i] = veletlenszeruLap();
@@ -38,23 +42,33 @@ public class Blackjack {
         jatekosLapokMutatasa();
     }
     
-    /*private static void oasztasOsztonak() {
-        kiir("... Lapok osztása az osztónak ..." + SEP);
-        while (pontSzamitas(jatekos) < 15) {
-            for (int i = 0; i < jatekos.length; i++) {
-                if(jatekos[i] == 0) {
-                    jatekos[i] = veletlenszeruLap();
+    private static void oasztasOsztonak() {
+        //kiir("... Lapok osztása az osztónak ..." + SEP);
+        while (pontSzamitas(oszto) <= 15) {
+            for (int i = 0; i < oszto.length; i++) {
+                if(oszto[i] == 0) {
+                    oszto[i] = veletlenszeruLap();
                     break;
                 }
             }
         }
-        jatekosLapokMutatasa();
-    }*/
+        osztoLapokMutatasa();
+    }
     
     private static void osztasEgyLapJatekosnak() {
         for (int i = 0; i < jatekos.length; i++) {
             if(jatekos[i] == 0) {
                 jatekos[i] = veletlenszeruLap();
+                break;
+            }
+        }
+        jatekosLapokMutatasa();
+    }
+    
+    private static void osztasEgyLapOsztonak() {
+        for (int i = 0; i < oszto.length; i++) {
+            if(oszto[i] == 0) {
+                oszto[i] = veletlenszeruLap();
                 break;
             }
         }
@@ -86,8 +100,21 @@ public class Blackjack {
         }
     }
     
+    private static void osztoKerVagyNem() {
+        if (rnd.nextBoolean()) { // true, tehát kér
+            osztasEgyLapOsztonak();
+        }
+    }
     
     
+    
+    
+    private static void eredmenyHirdetes() {
+        if(pontSzamitas(jatekos) > 21) {
+            kiir("Bust-olt a játékos. A ház nyert.");
+        }
+    }
+   
     
     
     
@@ -100,6 +127,16 @@ public class Blackjack {
             }
         }
         kiir("(" + pontSzamitas(jatekos) + ")\u001B[0m" + SEP);
+    }
+    
+    public static void osztoLapokMutatasa() {
+        kiir("Osztó: \u001B[33m");
+        for (int i = 0; i < oszto.length; i++) {
+            if(oszto[i] != 0) {
+                kiir(oszto[i] + " ");
+            }
+        }
+        kiir("(" + pontSzamitas(oszto) + ")\u001B[0m" + SEP);
     }
     
     public static int veletlenszeruLap() {
